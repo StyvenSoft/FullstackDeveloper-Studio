@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Modules</title>
+</head>
+
+<body>
+    <script type="module">
+        // --- Modules en JavaScript ---
+
+        // Los módulos en JavaScript permiten dividir el código en múltiples archivos reutilizables. 
+        // Esto mejora la organización, mantenimiento y reutilización del código en aplicaciones modernas.
+
+        // --- Sección 1: Conceptos básicos y explicación ---
+
+        // - Cada archivo en JavaScript puede actuar como un módulo.
+        // - Puedes exportar funciones, variables, clases, u objetos desde un módulo para que sean utilizados en otros.
+        // - Importa lo que necesites desde otro archivo para usarlo en tu aplicación.
+
+        // --- Tipos de exportación: ---
+        // 1. Exportación por defecto (default):
+        //    Un módulo puede tener una única exportación predeterminada.
+
+        // 2. Exportación nombrada:
+        //    Puedes exportar múltiples elementos y especificarlos por su nombre.
+
+        // Sección 2: Ejemplos 
+
+        // 2.1. Exportación e importación nombrada
+        // Archivo: Modules/mathUtils.js
+
+        // Archivo: main.js
+        import { add, subtract } from './Modules/mathUtils.js';
+        console.log(add(5, 3)); // Salida: 8
+        console.log(subtract(5, 3)); // Salida: 2
+
+        // 2.2. Exportación por defecto
+        // Archivo: greetings.js
+
+        // Archivo: main.js
+        import sayHello from './Modules/greetings.js';
+        console.log(sayHello('Steveen')); // Salida: Hello, Steveen!
+
+        // 2.3. Renombrar al importar
+        // Puedes usar un alias para evitar conflictos de nombres o mejorar la legibilidad.
+        // Archivo: mathUtils.js
+
+        // Archivo: main.js
+        import { multiply as times } from './Modules/mathUtils.js';
+        console.log(times(3, 4)); // Salida: 12
+
+        // 2.4. Exportar todo desde otro módulo
+        // Archivo: constants.js
+
+        // Archivo: mathUtils.js
+
+        // Archivo: main.js
+        import { PI, E } from './Modules/mathUtils.js';
+        console.log(PI, E); // Salida: 3.14 2.71
+
+
+
+        // Ejemplo complejo con módulos
+
+        // Implementación de una calculadora modular.
+
+        // Archivo: main.js
+        import * as calculator from './Modules/Calculator/index.js';
+        console.log(calculator.addition(10, 5)); // Salida: 15
+        console.log(calculator.subtraction(10, 5)); // Salida: 5
+
+    </script>
+</body>
+
+</html>
