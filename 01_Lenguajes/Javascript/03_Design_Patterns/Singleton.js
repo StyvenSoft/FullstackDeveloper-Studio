@@ -52,3 +52,37 @@ const instance2 = new Singleton();
 console.log(instance2.getData("appName")); // "Sistema de Facturación"
 
 console.log(instance1 === instance2); // true
+
+// Ejemplo 1: Singleton para Configuración Global
+// Simula un sistema donde varias partes de una aplicación acceden a la misma configuración.
+
+class Config {
+    constructor() {
+        if (Config.instance) return Config.instance;
+        Config.instance = this;
+
+        // Configuración inicial
+        this.settings = {
+            apiUrl: "https://api.empresa.com",
+            version: "1.0.0"
+        };
+        return this;
+    }
+
+    getSetting(key) {
+        return this.settings[key];
+    }
+
+    setSetting(key, value) {
+        this.settings[key] = value;
+    }
+}
+
+// Uso del Singleton de Configuración
+const globalConfig = new Config();
+console.log(globalConfig.getSetting("apiUrl")); // "https://api.empresa.com"
+
+const anotherConfig = new Config();
+anotherConfig.setSetting("version", "1.1.0");
+
+console.log(globalConfig.getSetting("version")); // "1.1.0"
