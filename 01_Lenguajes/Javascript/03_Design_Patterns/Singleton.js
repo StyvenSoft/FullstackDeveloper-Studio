@@ -86,3 +86,137 @@ const anotherConfig = new Config();
 anotherConfig.setSetting("version", "1.1.0");
 
 console.log(globalConfig.getSetting("version")); // "1.1.0"
+
+// Ejemplo 2: Singleton para Manejo de Usuarios
+// Sistema donde el Singleton controla la sesión actual del usuario.
+
+class UserSession {
+    constructor() {
+        if (UserSession.instance) return UserSession.instance;
+        UserSession.instance = this;
+
+        this.currentUser = null; // Usuario actual
+        return this;
+    }
+
+    login(user) {
+        this.currentUser = user;
+    }
+
+    logout() {
+        this.currentUser = null;
+    }
+
+    getCurrentUser() {
+        return this.currentUser;
+    }
+}
+
+// Uso del Singleton de Usuario
+const session = new UserSession();
+session.login({ id: 1, name: "Steveen Silva" });
+
+const anotherSession = new UserSession();
+console.log(anotherSession.getCurrentUser()); // { id: 1, name: "Steveen Silva" }
+
+// Ejercicio 1: Sistema de Registro de Logs
+// Singleton que administra un sistema de logs centralizado. Cada vez que un componente registre un mensaje, 
+// se almacena y es accesible globalmente.
+
+class Logger {
+    constructor() {
+        if (Logger.instance) return Logger.instance;
+        Logger.instance = this;
+
+        this.logs = [];
+        return this;
+    }
+
+    addLog(message) {
+        const timestamp = new Date().toISOString();
+        this.logs.push({ message, timestamp });
+        console.log(`[${timestamp}] ${message}`);
+    }
+
+    getLogs() {
+        return this.logs;
+    }
+}
+
+// Uso del Singleton de Logs
+const logger = new Logger();
+logger.addLog("Iniciando aplicación...");
+
+const anotherLogger = new Logger();
+anotherLogger.addLog("Conexión a base de datos establecida.");
+
+console.log(logger.getLogs());
+
+// Ejercicio 2: Gestión de Productos con Singleton
+// Singleton que administra el inventario de productos.
+// Permite agregar productos, obtener la lista completa y buscar productos por ID.
+
+class Inventory {
+    constructor() {
+        if (Inventory.instance) return Inventory.instance;
+        Inventory.instance = this;
+
+        this.products = [];
+        return this;
+    }
+
+    addProduct(product) {
+        this.products.push(product);
+    }
+
+    getProducts() {
+        return this.products;
+    }
+
+    findProductById(id) {
+        return this.products.find(p => p.id === id);
+    }
+}
+
+// Uso del Singleton de Inventario
+const inventory = new Inventory();
+inventory.addProduct({ id: 1, name: "Laptop", stock: 10 });
+inventory.addProduct({ id: 2, name: "Teclado", stock: 50 });
+
+const anotherInventory = new Inventory();
+console.log(anotherInventory.getProducts());
+console.log(anotherInventory.findProductById(1));
+
+
+// Ejercicio 3: Sistema de Facturación
+// Singleton que administra una lista de facturas generadas por un sistema de ventas.
+
+class InvoiceManager {
+    constructor() {
+        if (InvoiceManager.instance) return InvoiceManager.instance;
+        InvoiceManager.instance = this;
+
+        this.invoices = [];
+        return this;
+    }
+
+    addInvoice(invoice) {
+        this.invoices.push(invoice);
+    }
+
+    getInvoices() {
+        return this.invoices;
+    }
+
+    findInvoiceById(id) {
+        return this.invoices.find(inv => inv.id === id);
+    }
+}
+
+// Uso del Singleton de Facturación
+const invoiceManager = new InvoiceManager();
+invoiceManager.addInvoice({ id: 1, client: "Steveen Silva", total: 1500 });
+invoiceManager.addInvoice({ id: 2, client: "Maria Lopez", total: 2000 });
+
+const anotherInvoiceManager = new InvoiceManager();
+console.log(anotherInvoiceManager.getInvoices());
