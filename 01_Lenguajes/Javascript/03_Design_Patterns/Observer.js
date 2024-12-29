@@ -78,3 +78,66 @@ notificationSystem.addObserver(user3);
 // Notificar evento
 notificationSystem.notify("Se ha añadido un nuevo producto al catálogo.");
 notificationSystem.notify("El sistema estará en mantenimiento esta noche.");
+
+/**
+ * Ejemplo avanzado: Sistema de Stock de Productos
+ * Sistema donde los clientes y proveedores reciben 
+ * notificaciones sobre cambios en el stock de productos. 
+ */
+
+// clase productos (Sujeto)
+
+class Product {
+    constructor(nameProduct, stock) {
+        this.nameProduct = nameProduct;
+        this.stock = stock;
+        this.observers = [];
+    }
+
+    // Añadir un observador
+    addObserver(observer) {
+        this.observers.push(observer);
+    }
+
+    // Notificar a todos los observer
+    notify() {
+        this.observers.forEach(observer =>
+            observer.update(this.nameProduct, this.stock)
+        );
+    }
+
+    // Actualizar el stock y notificar
+    updateStock(newStock) {
+        console.log(`Stock del producto: (${this.nameProduct}) se actualizó a : ${newStock}.`);
+        this.stock = newStock;
+        this.notify();
+    }
+}
+
+// Clase observer (Cliente o proveedor)
+
+class Observer {
+    constructor(role, email) {
+        this.role = role;
+        this.email = email;
+    }
+
+    // Método llamado al recibir una notificación
+    update(productName, stock) {
+        console.log(`${this.role} (${this.email}) ha sido notificado: El stock actual de ${productName} es: ${stock}`);
+    }
+}
+
+// Uso
+const laptop = new Product("Laptop DELL", 10);
+
+const client1 = new Observer("Cliente", "cliente1@correo.com");
+const suppier1 = new Observer("Proveedor", "supplier1@correo.com");
+
+// Añadir observadores
+laptop.addObserver(client1);
+laptop.addObserver(suppier1);
+
+// Actualizar el stock
+laptop.updateStock(15);
+laptop.updateStock(5);
