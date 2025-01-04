@@ -111,3 +111,81 @@ Pablo está suministrando productos
 Usuario: Adrian, rol: Administrador
 Adrian está gestionando el sistema
 */
+
+/**
+ * Ejemplo avanzado: Sistema de Productos
+ * Crear diferentes tipos de productos según su categoría (Electrónica, Hogar, Ropa).
+ */
+
+// Clase Producto (Producto base)
+class Product {
+    constructor(name, category) {
+        this.name = name;
+        this.category = category;
+    }
+
+    info() {
+        console.log(`Producto: ${this.name}, Categoría: ${this.category}`);
+    }
+}
+
+// Clases específicas (Productos)
+class Electronics extends Product {
+    constructor(name) {
+        super(name, "Electrónica");
+    }
+
+    warranty() {
+        console.log(`${this.name} incluye garantía de 1 año.`);
+    }
+}
+
+class Home extends Product {
+    constructor(name) {
+        super(name, "Hogar");
+    }
+
+    warranty() {
+        console.log(`${this.name} incluye garantía de 6 meses.`);
+    }
+}
+
+class Clothing extends Product {
+    constructor(name) {
+        super(name, "Ropa");
+    }
+
+    sizeChart() {
+        console.log(`${this.name} tiene una guía de tallas disponible.`);
+    }
+}
+
+// Clase Factory (Fábrica)
+class ProductFactory {
+    static createProduct(name, category) {
+        switch (category) {
+            case "Electrónica":
+                return new Electronics(name);
+            case "Hogar":
+                return new Home(name);
+            case "Ropa":
+                return new Clothing(name);
+            default:
+                throw new Error("Categoría no válida");
+        }
+    }
+}
+
+// Ejemplo de uso
+const product1 = ProductFactory.createProduct("Laptop", "Electrónica");
+const product2 = ProductFactory.createProduct("Sofá", "Hogar");
+const product3 = ProductFactory.createProduct("Camisa", "Ropa");
+
+product1.info();
+product1.warranty();
+
+product2.info();
+product2.warranty();
+
+product3.info();
+product3.sizeChart();
