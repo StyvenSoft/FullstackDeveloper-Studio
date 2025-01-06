@@ -70,3 +70,57 @@ ClientModule.addClient("Pablo Beltran", "pablo@example.com");
 
 const client = ClientModule.findClient("juan@example.com");
 console.log("Cliente encontrado: ", client);
+
+/**
+ * Ejemplo avanzado: Gestión de Facturación
+ * Creación de un módulo para gestionar facturas, incluyendo la adición de nuevas facturas, cálculo de totales e impresión. 
+ */
+
+const InvoiceModule = (function () {
+    // Variables y métodos privados
+    const invoices = [];
+
+    function addInvoice(id, clinentName, items) {
+        const total = items.reduce((sum, item) => sum + item.price * item.quality, 0);
+        invoices.push({ id, clinentName, items, total });
+        console.log(`Factura: ${id} agregada para cliente: ${clinentName}`);
+    }
+
+    function calculateTotal(id) {
+        const invoice = invoices.find(inv => inv.id === id);
+        if (invoice) {
+            return invoice.total;
+        } else {
+            console.log(`Factura: ${id} no encontrada`);
+            return 0;
+        }
+    }
+
+    function printInvoice() {
+        invoices.forEach(inv => {
+            console.log(`Factura: ${inv.id} - Cliente: ${inv.clinentName} - Total: ${inv.total}`);
+        });
+    }
+
+    // Interfaz pública
+    return {
+        addInvoice,
+        calculateTotal,
+        printInvoice,
+    }
+
+})();
+
+InvoiceModule.addInvoice(1, "Steven Silva", [
+    { name: "Producto A", quality: 2, price: 50000 },
+    { name: "Producto B", quality: 1, price: 20000 },
+    { name: "Producto C", quality: 3, price: 60000 },
+]);
+
+InvoiceModule.addInvoice(2, "Andrea Beltran", [
+    { name: "Producto D", quality: 4, price: 30000 },
+]);
+
+InvoiceModule.printInvoice();
+console.log("Total de la factura 1: ", InvoiceModule.calculateTotal(1));
+console.log("Total de la factura 2: ", InvoiceModule.calculateTotal(2));
