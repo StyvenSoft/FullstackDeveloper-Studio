@@ -25,7 +25,7 @@ idUser = "A101";
 type ID = string | number;
 
 // Función que acepta un ID y lo procesa
-function getUserById(id:ID): void {
+function getUserById(id: ID): void {
     if (typeof id == "string") {
         console.log(`Buscando usuario por ID de texto: ${id}`);
     } else {
@@ -44,7 +44,7 @@ getUserById("456")
 type PaymentMethod = "credit" | "debit" | "cash";
 
 // Función que procesa un pago
-function processPayment(amount:number, method: PaymentMethod):void {
+function processPayment(amount: number, method: PaymentMethod): void {
     switch (method) {
         case "credit":
             console.log(`Procesando pago de: $${amount} con tarjeta de crédito.`);
@@ -64,3 +64,45 @@ function processPayment(amount:number, method: PaymentMethod):void {
 processPayment(11000, "credit");
 processPayment(25000, "debit");
 processPayment(35000, "cash");
+
+/**
+ * 
+ * Ejercicio 1: Gestión de Clientes
+ * Creación de un tipo de unión ClientInfo que pueda ser un objeto con datos básicos del 
+ * cliente o una cadena indicando un identificador anónimo:
+ */
+
+type ClientInfo = { nameClient: string; emailClient: string } | "anonymous";
+
+// Función para registrar un cliente
+function registerClient(client: ClientInfo): void {
+    if (typeof client === "string") {
+        console.log("Registrando cliente anónimo");
+    } else {
+        console.log(`Registrando cliente: ${client.nameClient} correo: ${client.emailClient}`);
+    }
+}
+
+registerClient('anonymous');
+registerClient({ nameClient: 'Alfredo Diaz', emailClient: 'dario@gmail.com' });
+
+/**
+ * Ejercicio 2: Productos y Proveedores
+ * Definir un tipo InventoryItem que pueda ser un Product o un Supplier:
+ */
+
+type Product = { name: string; price: number };
+type Supplier = { name: string; contact: string };
+type InventoryItem = Product | Supplier;
+
+// Función para imprimir detalles del inventario
+function printInventory(item: InventoryItem): void {
+    if ("price" in item) {
+        console.log(`Producto: ${item.name}, precio: ${item.price}`);
+    } else {
+        console.log(`Proveedor: ${item.name}, Contacto: ${item.contact}`);
+    }
+}
+
+printInventory({ name: "Steveen Echeverri", price: 234000 });
+printInventory({ name: "Steveen Echeverri", contact: "steveen@gmail.com" });
