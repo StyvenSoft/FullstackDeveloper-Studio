@@ -47,3 +47,58 @@ const employee: UserEmployee = {
 };
 
 console.log(employee);
+
+
+// Ejemplo avanzado: Gestión de Facturación y Proveedores
+
+// Tipo para un producto.
+type Product = {
+    productId: number;
+    nameProduct: string;
+    priceProduct: number;
+};
+
+// Tipo para un proveedor
+type Supplier = {
+    supplierId: number;
+    companyName: string;
+    contactEmail: string;
+};
+
+// Intersección para un registro de inventario.
+type InventoryRecord = Product & Supplier;
+
+const inventoryItem: InventoryRecord = {
+    productId: 101,
+    nameProduct: "Monitor 4k",
+    priceProduct: 350000,
+    supplierId: 2001,
+    companyName: "TechSuppliers Inc.",
+    contactEmail: "contact@techsuppliers.com",
+};
+
+console.log(`Producto: ${inventoryItem.nameProduct}`);
+console.log(`Proveedor: ${inventoryItem.companyName}`);
+
+
+// Ejercicio 1: Clientes y Usuarios
+// Crea dos tipos: Client y User. Combínalos en un tipo ClientUser y escribe una función para 
+// registrar un cliente que también sea un usuario del sistema.
+
+type Client = {
+    clientId: number;
+    companyName: string;
+};
+
+type UserClient = {
+    username: string;
+    email: string;
+};
+
+type ClientUser = Client & UserClient;
+
+// Función para registrar un cliente usuario
+function registerClientUser(clientUser: ClientUser): void {
+    console.log(`Cliente registrado: ${clientUser.companyName}`);
+    console.log(`Usuario registrado: ${clientUser.username}`);
+}
