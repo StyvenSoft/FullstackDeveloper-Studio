@@ -52,21 +52,21 @@ console.log(employee);
 // Ejemplo avanzado: Gestión de Facturación y Proveedores
 
 // Tipo para un producto.
-type Product = {
+type ProductUser = {
     productId: number;
     nameProduct: string;
     priceProduct: number;
 };
 
 // Tipo para un proveedor
-type Supplier = {
+type SupplierUser = {
     supplierId: number;
     companyName: string;
     contactEmail: string;
 };
 
 // Intersección para un registro de inventario.
-type InventoryRecord = Product & Supplier;
+type InventoryRecord = ProductUser & SupplierUser;
 
 const inventoryItem: InventoryRecord = {
     productId: 101,
