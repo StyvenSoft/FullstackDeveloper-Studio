@@ -38,3 +38,37 @@ const techCorpBilling: CompanyBilling = {
     bankAccount: "12345678",
     swiftCode: "TECH1234",
 };
+
+// Ejemplo práctico: Productos físicos y digitales
+
+type ProductBase = {
+    idProduct: number;
+    nameProduct: string;
+};
+
+type PhysicalProduct = ProductBase & {
+    weight: number;
+    dimension: string;
+};
+
+type DigitalProduct = ProductBase & {
+    downloadLink: string;
+    licenseKey: string;
+};
+
+// // Tipo condicional para determinar el envío
+type ShippingDetails<T> = T extends PhysicalProduct
+    ? { shippingCost: number; deliveryDate: string; }
+    : { emailDelivery: boolean; };
+
+type PhysicalShipping = ShippingDetails<PhysicalProduct>;
+type DigitalShipping = ShippingDetails<DigitalProduct>;
+
+const monitorShipping: PhysicalShipping = {
+    shippingCost: 50,
+    deliveryDate: "2025-01-15",
+};
+
+const softwareShipping: DigitalShipping = {
+    emailDelivery: true,
+};
