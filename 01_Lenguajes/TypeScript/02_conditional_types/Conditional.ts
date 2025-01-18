@@ -56,7 +56,7 @@ type DigitalProduct = ProductBase & {
     licenseKey: string;
 };
 
-// // Tipo condicional para determinar el envío
+// Tipo condicional para determinar el envío
 type ShippingDetails<T> = T extends PhysicalProduct
     ? { shippingCost: number; deliveryDate: string; }
     : { emailDelivery: boolean; };
@@ -72,3 +72,40 @@ const monitorShipping: PhysicalShipping = {
 const softwareShipping: DigitalShipping = {
     emailDelivery: true,
 };
+
+// Ejercicio 1: Identificación de usuarios
+// Crea un tipo condicional UserRole<T> que devuelva "Admin Access" si el tipo de usuario es Admin y "Limited Access" si es Guest.
+
+type Admin = {
+    role: "Admin";
+    permissions: string[];
+};
+
+type Guest = {
+    role: "Guest";
+};
+
+type UserRole<T> = T extends Admin ? "Admin Access" : "Limited Access";
+
+type AdminAccess = UserRole<Admin>; // "Admin Access"
+type GuestAccess = UserRole<Guest>; // "Limited Access"
+
+// Ejercicio 2: Gestión de pagos
+// Crea un tipo condicional que determine si un cliente paga con tarjeta de crédito o transferencia bancaria basado en su tipo (individual o empresa).
+
+type Individual = {
+    name: string;
+    email: string;
+};
+
+type Corporation = {
+    companyName: string;
+    taxId: string;
+};
+
+type PaymentMethodIndividual<T> = T extends Individual
+    ? { cardNumber: string; expiryDate: string; }
+    : { bankAccount: string; iban: string; };
+
+type IndividualPayment = PaymentMethodIndividual<Individual>;
+type CorporationPayment = PaymentMethodIndividual<Corporation>;
