@@ -60,3 +60,52 @@ const creditDetails: ClientCreditView = {
     name: "Tech Corp",
     creditLimit: 50000,
 };
+
+// Ejemplo práctico: Gestión de productos
+// En un sistema de inventarios, podríamos querer separar los datos de productos para diferentes módulos como ventas o logística.
+type Product = {
+    id: number;
+    name: string;
+    category: string;
+    price: number;
+    stock: number;
+    supplier: string;
+};
+
+// Vista para ventas (solo datos relevantes)
+type SalesView = Pick<Product, "id" | "name" | "price">;
+
+// Vista para logística (solo datos de inventario)
+type LogisticsView = Pick<Product, "id" | "name" | "stock" | "supplier">;
+
+const salesProduct: SalesView = {
+    id: 101,
+    name: "Laptop",
+    price: 1200,
+};
+
+const logisticsProduct: LogisticsView = {
+    id: 101,
+    name: "Laptop",
+    stock: 50,
+    supplier: "Tech Warehouse",
+};
+
+// Ejercicios avanzados/complejos
+// Ejercicio 1: Vista de usuarios activos
+// Crea un tipo que seleccione solo las propiedades necesarias para mostrar usuarios activos en una tabla.
+
+type UserPerson = {
+    id: number;
+    name: string;
+    email: string;
+    isActive: boolean;
+    lastLogin: Date;
+};
+
+type ActiveUserView = Pick<User, "id" | "name" | "isActive">;
+
+const activeUsers: ActiveUserView[] = [
+    { id: 1, name: "Hugo", isActive: true },
+    { id: 2, name: "Pilar", isActive: false },
+];
