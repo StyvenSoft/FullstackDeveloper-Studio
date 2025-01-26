@@ -103,9 +103,49 @@ type UserPerson = {
     lastLogin: Date;
 };
 
-type ActiveUserView = Pick<User, "id" | "name" | "isActive">;
+type ActiveUserView = Pick<UserPerson, "id" | "name" | "isActive">;
 
-const activeUsers: ActiveUserView[] = [
-    { id: 1, name: "Hugo", isActive: true },
-    { id: 2, name: "Pilar", isActive: false },
+const users: UserPerson[] = [
+    { id: 1, name: "Hugo", email: "hugo@example.com", isActive: true, lastLogin: new Date("2025-01-01") },
+    { id: 2, name: "Pilar", email: "pilar@example.com", isActive: false, lastLogin: new Date("2025-01-15") },
+    { id: 3, name: "Charlie", email: "charlie@example.com", isActive: true, lastLogin: new Date("2025-01-10") },
 ];
+
+// Filtrar usuarios activos
+const getActiveUsers = (users: UserPerson[]): ActiveUserView[] => {
+    return users
+        .filter((user) => user.isActive)
+        .map(({ id, name, isActive}) => ({ id, name, isActive }));
+};
+
+const activeUsers: ActiveUserView[] = getActiveUsers(users);
+console.log('Usuarios activos: ', activeUsers);
+
+
+// Ejercicio 2: Informe de proveedores
+// Crea un tipo que represente un informe básico para proveedores, seleccionando solo las propiedades clave.
+
+type Supplier = {
+    id: number;
+    name: string;
+    contactEmail: string;
+    contactPhone: string;
+    rating: number;
+    location: string;
+};
+
+type SupplierReport = Pick<Supplier, "id" | "name" | "rating">;
+
+const suppliers: Supplier[] = [
+    { id: 1, name: "Supplier A", contactEmail: "a@suppliers.com", contactPhone: "1234567890", rating: 4.5, location: "Bogotá" },
+    { id: 2, name: "Supplier B", contactEmail: "b@suppliers.com", contactPhone: "9876543210", rating: 3.8, location: "Medellín" },
+    { id: 3, name: "Supplier C", contactEmail: "c@suppliers.com", contactPhone: "5678901234", rating: 4.0, location: "Cali" },
+];
+
+// Generar informe básico de proveedores
+const generateSupplierReport = (suppliers: Supplier[]): SupplierReport[] => {
+    return suppliers.map(({ id, name, rating }) => ({ id, name, rating }));
+}
+
+const supplierReports: SupplierReport[] = generateSupplierReport(suppliers);
+console.log('Informes de proveedores: ', supplierReports);
