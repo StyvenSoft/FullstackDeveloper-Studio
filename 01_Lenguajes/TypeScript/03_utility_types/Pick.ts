@@ -115,7 +115,7 @@ const users: UserPerson[] = [
 const getActiveUsers = (users: UserPerson[]): ActiveUserView[] => {
     return users
         .filter((user) => user.isActive)
-        .map(({ id, name, isActive}) => ({ id, name, isActive }));
+        .map(({ id, name, isActive }) => ({ id, name, isActive }));
 };
 
 const activeUsers: ActiveUserView[] = getActiveUsers(users);
@@ -149,3 +149,50 @@ const generateSupplierReport = (suppliers: Supplier[]): SupplierReport[] => {
 
 const supplierReports: SupplierReport[] = generateSupplierReport(suppliers);
 console.log('Informes de proveedores: ', supplierReports);
+
+// Ejercicio 3: Configuración dinámica de campos
+
+type ConfigurableFields = {
+    id: number;
+    label: string;
+    placeholder: string;
+    required: boolean;
+    maxLength: number;
+}
+
+type TextFieldConfig = Pick<ConfigurableFields, "label" | "placeholder" | "required">;
+
+const textFieldConfig: TextFieldConfig = {
+    label: "Username",
+    placeholder: "Ingrese su nombre de usuario",
+    required: true,
+}
+
+// Función para generar un campo configurado
+const generateField = (config: TextFieldConfig): string => {
+    return `
+        <label>${config.label}</label>
+        <input type="text" placeholder="${config.placeholder}" ${config.required ? "required" : ""}>
+    `;
+}
+
+// Ejemplo de uso con la configuración
+const fieldHTML: string = generateField(textFieldConfig);
+console.log("HTML generado para el campo: ");
+console.log(fieldHTML);
+
+// Crear múltiples configuraciones dinámicas
+const multipleFieldConfigs: TextFieldConfig[] = [
+    { label: "Email", placeholder: "Ingrese su email", required: true },
+    { label: "password", placeholder: "Ingrese su password", required: true },
+    { label: "Phone number", placeholder: "Ingrese su número de celular", required: false },
+];
+
+// Generar HTML para múltiples campos
+const generateMultipleFields = (configs: TextFieldConfig[]): string => {
+    return configs.map(generateField).join("\n");
+}
+
+const multipleFieldsHTML: string = generateMultipleFields(multipleFieldConfigs);
+console.log("HTML generado para múltiples campos");
+console.log(multipleFieldsHTML);
